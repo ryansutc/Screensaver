@@ -51,11 +51,11 @@ public class GUI {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0,0));
 		Canvas canvas = new Canvas();
-		canvas.setBackground(new Color(255, 218, 185));
+		canvas.setBackground(new Color(0, 0, 0));
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("Mouse clicked");
+				
 				canvas.addShape(arg0.getX(),arg0.getY());
 				
 			}
