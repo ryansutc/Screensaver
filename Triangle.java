@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 
 public class Triangle extends Shape {
-
+	private int minmax = 10;
 	public Triangle(int x, int y, int width, int height, int dx, int dy) {
 		super(x, y, width, height, dx, dy);
 		// TODO Auto-generated constructor stub
@@ -51,7 +51,19 @@ public class Triangle extends Shape {
 			y = 0 + this.getHeight();
 			dy= dy - (dy * 2);
 		}
-
+		resize();
 	}
-
+	private void resize(){
+		
+		if (this.getWidth() >= minmax){
+			minmax = 10;
+			this.setWidth(this.getWidth()-1);
+			this.setHeight(this.getHeight()-1);
+		}
+		else if (this.getWidth() <= minmax){
+			minmax = 60;
+			this.setWidth(this.getWidth()+1);
+			this.setHeight(this.getHeight()+1);
+		}
+	}
 }
