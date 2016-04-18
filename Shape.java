@@ -41,8 +41,8 @@ public abstract class Shape {
 	
 
 	//abstract class move
-	public void move(Graphics g, JPanel jp){
-		//if the new coords are outside window switch direction
+	
+		public void move(Graphics g, JPanel jp){//if the new coords are outside window switch direction
 		x += dx; //move x
 		y += dy; //move y
 		
@@ -113,10 +113,5 @@ public abstract class Shape {
 		this.scale = scale;
 	}
 
-	
-
-
-
-	
 	
 }//end class
