@@ -2,6 +2,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 
@@ -10,8 +11,9 @@ import javax.swing.JPanel;
 
 public class Star extends Shape {
 	Graphics2D g2;
-	//static generic coords
 	
+	//static generic coords
+	private int rotate = 1;
 	private static final int xPoints[] = {55,67,109,73,83,55,27,37,1,43}; 
 	private static final int yPoints[] = {0,36,36,54,96,72,96,54,36,36};
 
@@ -30,9 +32,8 @@ public class Star extends Shape {
 	
 	@Override
 	public void draw(Graphics g, JPanel c){
-		this.setWidth( (int) (108 * this.getScale()));
-		this.setHeight( (int) (96 * this.getScale()));
-		// draw GeneralPath (polygon)
+		this.setWidth( (int) (108 * this.getScale())); //scale star width
+		this.setHeight( (int) (96 * this.getScale())); //scale star height
 		
 		g2 = (Graphics2D) g;
 		AffineTransform at = g2.getTransform();
@@ -42,30 +43,35 @@ public class Star extends Shape {
 		for (int i=1; i<xPoints.length; i++) {
 			star.lineTo(xPoints[i], yPoints[i]);
 		};
-
+		
+		
 		star.closePath();
-//		float dash1[] = {10f};
-//		BasicStroke dashed = new BasicStroke(2.4f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 10.0f, dash1, 0.0f);
-//		                        
-//		g2.setStroke(dashed);
+
 		g2.setColor(this.getColor());
 		
 		g2.translate(this.getX(), this.getY());
 		g2.scale(this.getScale(), this.getScale());
-		
-		
+		updateRotate();
+		//g2.rotate(Math.toRadians(45));
+		g2.rotate(Math.toRadians(rotate), this.getWidth()/2, this.getHeight()/2);
 		
 		g2.fill(star);
-		//g2.draw(star);
-		//g2.scale(2, 2);
-		//g2.translate(this.getX() - (this.getX()*2), this.getY() - (this.getY()*2)); //set canvas back to normal (untranslate)
-		//g2.scale(2, 2);
-		//g2.scale(swidth/this.getWidth(), swidth/this.getWidth()); //set canvas back to normal (unscale)
-		//g2.translate(this.x, this.y);
-		g2.setTransform(at);
 		
+		g2.setColor(Color.BLUE);
+        g2.draw(star.getBounds());
+		
+		g2.setTransform(at);
+	
+
 	}
 
-	//abstract class move
+
 	
+	//abstract class move
+	private void updateRotate(){
+		if (rotate < 360){
+			rotate += 1;
+		}
+		else {rotate = 1;}
+	}
 }
