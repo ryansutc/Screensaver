@@ -1,6 +1,12 @@
 # Screensaver
 PROG1400 Assign 5: Basic Screensaver and moving graphics
 
+Submission notes:
+- click on the screen to add objects to canvas. There are four shapes each with their own form of mutation.
+- Had some trouble getting proper edge detection on rotating star shape some overlap occurs with walls in certain instances.
+- Collision detection is imperfect. I've used bounding rectangles of each shape and can detect collision but the deflection angles are not perfect (only x direction inverts).
+
+
 Initial Request
 Programming Assignment Rubric
 Assignment: # 5
