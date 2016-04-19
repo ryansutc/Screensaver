@@ -16,8 +16,8 @@ public class Canvas extends JPanel {
 	private final int ANIMATION_DELAY = 20;
 	Timer animationTimer = new Timer(ANIMATION_DELAY, new TimerHandler());
 	ArrayList<Shape> shapes = new ArrayList<>(); //list of shapes being drawn
-	int itemCount = 1;
-	Random myrdm = new Random();
+	int clickCount = 1;
+	private Random myrdm = new Random();
 	private static final Color purple1 = new Color(147,137,170);
 	private static final Color purple2 = new Color(110,96,141);
 	private static final Color purple3 = new Color(82,66,117);
@@ -38,7 +38,7 @@ public class Canvas extends JPanel {
 	
 	
 	Color colorArray[] = {purple1,purple2, purple3, purple4, purple5, 
-			green1, green2, green3, green4, 
+			green1, green2, green3, green4, green5, 
 			orange1, orange2, orange3, orange4, orange5};
 	/**
 	 * Create the panel.
@@ -51,26 +51,26 @@ public class Canvas extends JPanel {
 	
 	public void addShape(int x, int y){
 		
-		int dx = 1 + myrdm.nextInt(4);
-		int dy = 1 + myrdm.nextInt(4);
+		int dx = -1 + myrdm.nextInt(1);
+		int dy = -1 + myrdm.nextInt(1);
 		Color clr = colorArray[0 + myrdm.nextInt(colorArray.length)];
-		if (itemCount == 1){
+		if (clickCount == 1){
 			shapes.add(new Rectangle(x, y, 25, 25, dx, dy, clr));
 		}
-		if (itemCount == 2){
+		if (clickCount == 2){
 			shapes.add(new Oval(x, y, 30, 30, dx, dy, clr));
 		}
-		if (itemCount == 3){
+		if (clickCount == 3){
 			shapes.add(new Triangle(x,y,30, 30, dx, dy, clr));
 		}
-		if (itemCount == 4){
+		if (clickCount == 4){
 			shapes.add(new Star(x,y,0.5,dx,dy));
 		
 		}
 		
-		itemCount += 1;
-		if (itemCount > 4){
-			itemCount = 1;	
+		clickCount += 1;
+		if (clickCount > 4){
+			clickCount = 1;	
 		}
 	}
 
@@ -93,8 +93,35 @@ public class Canvas extends JPanel {
 		
 		for (Shape s : shapes){
 			s.move(g, this);
-			
+			hit(s);
 			s.draw(g,this);
+			
+			
 		}
+	}
+	public void hit(Shape s){
+		for (Shape s2: shapes){
+			if (s2 == s){
+				continue;
+			}
+			if (rectIntersect(s,s2)){
+								
+				s.dx = s.dx - (s.dx*2);
+			}
+		}
+		
+	}
+
+	//idea based on youtube video here: https://www.youtube.com/watch?v=NZHzgXFKfuY
+	private boolean rangeIntersect(int min0, int max0, int min1, int max1){
+		return Math.max(min0, max0) >= Math.min(min1, max1) &&
+		Math.min(min0, max0) <= Math.max(min1, max1);
+		
+	}
+
+	private boolean rectIntersect(Shape r0, Shape r1){
+		return rangeIntersect(r0.x, r0.x + r0.getWidth(), r1.x, r1.x + r1.getWidth())
+		&& rangeIntersect(r0.y, r0.y + r0.getWidth(), r1.y, r1.y + r1.getWidth());
+		
 	}
 }
